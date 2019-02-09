@@ -1,0 +1,10 @@
+﻿.slant-left, .slant-right {
+    background: #efefef;
+    width: 58%;
+}
+
+
+    .slant-left .col-md-8, .slant-right .col-md-6 {
+        width: 94%;
+        margin: 0 auto;
+    }

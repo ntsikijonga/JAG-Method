@@ -1,0 +1,189 @@
+﻿@{
+    Layout = "~/Views/shared/_LeadLayout.cshtml";
+    ViewBag.Title = "Best Insurance Quotes";
+}
+@using JAG.DevTest2019.Host.Models
+@model LeadViewModel
+@{decimal count = Model.ServiceQueriesNumber;}
+
+@section Meta{
+    <meta name="description" content="Default site" />
+    <meta name="keywords" content="Default" />
+    <meta name="robots" content="index" />
+}
+
+<section id="quote" class="main-banner" style="background-image: url(/Content/Images/Banners/car-insurance.jpg)">
+    <div class="slant-left col-md-9 pull-left">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="capture-form">
+                <h1 class="text-center">Insurance</h1>
+                <h4>Don’t pay too much, find the best insurance quotes and start saving today!</h4>
+                @using (Html.BeginForm("SubmitLead", "Lead", FormMethod.Post, new { id = "frmsubmit" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <div id="loading">
+                        @*<img src="~/Content/Images/126.gif" />*@
+                    </div>
+                    <div class="col-md-12">
+                        <p>
+                            <input type="hidden" value="@Model.TrackingCode" id="hdnTrackingCode" />
+                                                        
+                            <div class="form-group">
+                                My name is @Html.TextBoxFor(model => model.FirstName, new { @placeholder = Html.DisplayNameFor(model => model.FirstName), @required = "required" }) @Html.TextBoxFor(model => model.Surname, new { @placeholder = Html.DisplayNameFor(model => model.Surname), @required = "required" })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                You can contact me at @Html.TextBoxFor(model => model.EmailAddress, new { @placeholder = Html.DisplayNameFor(model => model.EmailAddress), @required = "required" }) or @Html.TextBoxFor(model => model.ContactNumber, new { @placeholder = Html.DisplayNameFor(model => model.ContactNumber) })
+                                to help me save on insurance
+                            </div>
+                            <div class="form-group">
+                                I am @Html.DropDownListFor(model => model.Gender, Model.Genders, "Gender") and my language preference is @Html.DropDownListFor(model => model.Language, Model.Languages, "Language") and my blood type is @Html.DropDownListFor(model => model.BloodType, Model.BloodTypes, "BloodType")
+                            </div>
+                            
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-12 text-center">
+                        <button type="submit" id="btnSubmit" class="orange-button">Get Quotes Now</button>
+                    </div>
+                }
+                @if (Model.Results != null &&
+                    Model.Results.IsSuccessful)
+                {
+                    <div class="col-md-12 text-center">
+                        <img src="~/Content/Images/Products/new-success.png" height="24px" />
+                        @Html.ValueFor(model => model.Results.Message)
+                        <p id="signalrId"></p>
+                    </div>
+                }
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
+<div class="clearfix"></div>
+<div class="container benefits-padding text-center">
+    <h2>Benefits</h2>
+    <div class="benefits-cols">
+        <div class="col-md-3 text-center text-instructions">
+            <img src="~/Content/Images/Products/new-save.png" />
+            <p>People saved on insurance</p>
+        </div>
+        <div class="col-md-3 text-center text-instructions">
+            <img src="~/Content/Images/Products/new-calling.png" />
+            <p>99.99% were called in under 5 minutes</p>
+        </div>
+        <div class="col-md-3 text-center text-instructions">
+            <img src="~/Content/Images/Products/new-success.png" />
+            <p>96% believe these stats</p>
+        </div>
+        <div class="col-md-3 text-center text-instructions">
+            <img src="~/Content/Images/Products/new-clients.png" />
+            @Html.Hidden("count", 6000000)
+            <p id="queriesCount"></p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div id="quote" class="testimonial-banner" style="background-image: url('../../Content/Images/Banners/best-car-insurance.jpg');">
+    <div class="slant-right col-md-9 pull-right">
+        <div class="col-md-6 col-md-offset-3 testimonials text-center">
+            <b>Getting the lowest insurance quote has never been so easy:</b>
+            <p>
+                <b>Joe Blogs (26 years)</b><br /><br />
+                Telsa model x <br />
+                Was paying R999,999.99<br />
+                Now paying R99.99
+            </p>
+            <h2 class="highlight">Insurance saving of {lots of %}</h2>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+<div class="container-blue">
+    <div class="col-md-6 col-md-offset-3 text-center">
+        <h1>Get a quote and</h1>
+        <h1 class="green">start saving now</h1>
+        <p>Get in touch to receive insurance quotes from South Africa’s top insurance companies. Getting the lowest insurance premiums has never been so easy.</p>
+        <a id="lnkGetQuote" href="#quote" class="orange-button">Get a quote now</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="~/signalr/hubs/"></script>
+    <script src="Scripts/jquery.signalR-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#lnkLead').addClass('activeMenu');
+        })
+
+        function onSubmitBegin() {
+            // Disable the button and hide the other image here
+            // or you can hide the whole div like below
+            $('#btnSubmit').hide();
+        }
+
+        function increamentServiceQueriesNumber() {
+            var count = parseInt($('#count').val(), 10);
+            count = count + 1;
+            $('#count').val(count.toString());
+            var stringValue = 'Over ' + count.toLocaleString() + ' queries serviced';
+            document.getElementById("queriesCount").innerHTML = stringValue;
+        }
+
+        setInterval(function () {
+            /// call your function here
+            increamentServiceQueriesNumber();
+        }, 5000);
+
+        $(function () {
+            var jagHub = $.connection.jAGMethodHub;
+
+            jagHub.client.respondToPage = function (message) {
+                $('#signalrId').val(htmlEncode(message));
+                document.getElementById("signalrId").innerHTML = htmlEncode(message);
+            };
+
+            $.connection.hub.start().done(function () {
+                $('#btnSubmit').click(function () {
+                    jagHub.server.send('Lead Received');
+                });
+            });
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+
+        var form = $('#frmsubmit').val();
+        var fd = new FormData(form);
+
+        $(document).ready(function () {
+            $("#submit").click(function (e) {
+                {
+                    $.ajax({
+                        cache: false,
+                        async: true,
+                        type: "POST",
+                        url: "SubmitLead",
+                        data: $('#frmsubmit').serialize(),
+                        success: function (data) {
+                            alert(data);
+                        }
+                    });
+                }
+                return false;
+            });
+        }); 
+        setTimeout(increamentServiceQueriesNumber, 5000);
+    </script>
+}

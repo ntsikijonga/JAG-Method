@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/main/.vs
+/main/packages
+/main/src/JAG.DevTest2019.Model/bin
+/main/src/JAG.DevTest2019.Model/obj
+/main/src/JAG.DevTest2019.ServiceHost/bin
+/main/src/JAG.DevTest2019.ServiceHost/obj
+/main/src/JAG.DevTest2019.WebHost/bin
+/main/src/JAG.DevTest2019.WebHost/obj
+/main/tests/JAG.DevTest2019.UnitTests/bin
+/main/tests/JAG.DevTest2019.UnitTests/obj
+/main/JAG2019/obj/Debug
+/main/JAG2019/.vs/JAG2019/v15
+/main/JAG2019
+/main/src/JAG.DevTest2019.DBPoll/bin/Debug
+/main/src/JAG.DevTest2019.DBPoll/obj/Debug

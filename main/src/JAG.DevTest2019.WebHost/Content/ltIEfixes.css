@@ -1,0 +1,83 @@
+﻿body {
+}
+
+.text-banner-circles .circle{
+    background:#ffffff;
+}
+
+
+/*************************** INPUT ***************************/
+::-webkit-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+:-ms-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+input[type=text]:focus::-webkit-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+input[type=text]:focus:-moz-placeholder { /* Firefox 18- */
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+input[type=text]:focus::-moz-placeholder { /* Firefox 19+ */
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+input[type=text]:focus:-ms-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #777777;
+    white-space: pre-line;
+}
+
+input[type=text], [type=password], textarea, select {
+    width: 100%;
+}
+
+input[type=text], [type=password], [type=number], textarea, select {
+    font-family: 'Montserrat', sans-serif;
+    color: #313131;
+    font-size: 15px;
+    padding: 10px 15px;
+    border: 2px solid #ffffff;
+    background-color: rgba(255,255,255,0.3);
+    font-weight: 400;
+    margin-bottom: 5px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-appearance: none; /*fix for ios rendering issues*/
+    white-space: pre-line;
+}
+
+    input[type=text]:focus, [type=password]:focus, [type=number]:focus, textarea:focus, select:focus {
+        outline: 0;
+        border: 2px solid #ffffff;
+        background: #ffffff !important;
+        color: #212121;
+    }
